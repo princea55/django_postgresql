@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Stock</title>
+</head>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+    h2{
+        text-align: center;
+    }
+</style>
+
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    <div>
+        <!--                | means OR operator-->
+        <strong>{{message|safe}}</strong>
+    </div>
+    {% endfor %}
+    {% else %}
+    {{order}}
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="file1"> Upload a file</label>
+        <input type="file" id="file1" name="file">
+        <small>Only accepts CSV files</small>
+        <button type="submit">Upload</button>
+    </form>
+    {% endif %}
+    <h2>Stock Data</h2>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Symbol</th>
+            <th>Open</th>
+            <th>Close</th>
+            <th>Low</th>
+            <th>High</th>
+            <th>volume</th>
+        </tr>
+        {%for profile in profiles %}
+        <tr>
+            <td>{{profile.date}}</td>
+            <td>{{profile.symbol}}</td>
+            <td>{{profile.opens}}</td>
+            <td>{{profile.close}}</td>
+            <td>{{profile.low}}</td>
+            <td>{{profile.high}}</td>
+            <td>{{profile.volume}}</td>
+        </tr>
+        {%endfor%}
+    </table>
+
+</body>
+
+</html>
